@@ -2,6 +2,18 @@
 
 Please also see my solutions to this challenge in [Ruby](https://github.com/AdamusBG/airport_challenge) and in [JavaScript](https://github.com/AdamusBG/airport_challenge-js).
 
+```
+        ______
+        _\____\___
+=  = ==(____MA____)
+          \_____\___________________,-~~~~~~~`-.._
+          /     o o o o o o o o o o o o o o o o  |\_
+          `~-.__       __..----..__                  )
+                `---~~\___________/------------`````
+                =  ===(_________)
+
+```
+
 ## User stories
 
 As an air traffic controller  
