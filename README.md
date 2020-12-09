@@ -1,6 +1,6 @@
 # Airport Challenge in Java
 
-Please also see my solutions to this challenge in [ruby](https://github.com/AdamusBG/airport_challenge) and in [JavaScript](https://github.com/AdamusBG/airport_challenge-js).
+Please also see my solutions to this challenge in [Ruby](https://github.com/AdamusBG/airport_challenge) and in [JavaScript](https://github.com/AdamusBG/airport_challenge-js).
 
 ## User stories
 
