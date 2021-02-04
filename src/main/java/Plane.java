@@ -1,6 +1,6 @@
 public class Plane {
 
-    public String airport;
+    private String airport;
 
     // constructor methods, one making a plane in flight and another creating a plane at an airport
 
@@ -24,6 +24,30 @@ public class Plane {
         } else {
             return true;
         }
+    }
+
+    // methods for changing the planes airport
+
+    public void land(String airport) throws Exception {
+        if (this.atAirport()) {
+            throw new Exception("This plane is already at an airport!");
+        } else { // further errors to throw when airport class implemented
+            this.setAirport(airport); // also include call to airport methods here
+        }
+    }
+
+    public void take_off(String airport) throws Exception {
+        if (!this.atAirport()) {
+            throw new Exception("This plane cannot take off as it is already at an airport!");
+        } else if (this.getAirport() != airport) {
+            throw new Exception("The pane can't take off from an airport that it is not at");
+        } else { // further errors to throw when airport class implemented
+            this.setAirport("none"); // also include call to airport method here
+        }
+    }
+
+    private void setAirport(String airport) {
+        this.airport = airport;
     }
 
 }
