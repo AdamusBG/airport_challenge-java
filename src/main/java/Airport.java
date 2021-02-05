@@ -40,6 +40,12 @@ public class Airport {
         }
     }
 
+    // method returning list of planes
+
+    public ArrayList<String> getPlanesInHangar() {
+        return this.planesInHangar;
+    }
+
     // private methods
 
     private boolean hasCapacity() {
