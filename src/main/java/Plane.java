@@ -26,7 +26,7 @@ public class Plane {
         }
     }
 
-    // methods for changing the planes airport
+    // methods for changing the plane's airport
 
     public void land(String airport) throws Exception {
         if (this.atAirport()) {
@@ -38,7 +38,7 @@ public class Plane {
 
     public void take_off(String airport) throws Exception {
         if (!this.atAirport()) {
-            throw new Exception("This plane cannot take off as it is already at an airport!");
+            throw new Exception("This plane cannot take off as it is already in flight!");
         } else if (this.getAirport() != airport) {
             throw new Exception("The pane can't take off from an airport that it is not at");
         } else { // further errors to throw when airport class implemented
@@ -46,8 +46,6 @@ public class Plane {
         }
     }
 
-    private void setAirport(String airport) {
-        this.airport = airport;
-    }
+    private void setAirport(String airport) { this.airport = airport; }
 
 }
