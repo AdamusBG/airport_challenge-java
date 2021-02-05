@@ -36,7 +36,7 @@ public class Plane {
         }
     }
 
-    public void take_off(String airport) throws Exception {
+    public void takeOff(String airport) throws Exception {
         if (!this.atAirport()) {
             throw new Exception("This plane cannot take off as it is already in flight!");
         } else if (this.getAirport() != airport) {
