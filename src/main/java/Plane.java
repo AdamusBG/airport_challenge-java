@@ -19,11 +19,7 @@ public class Plane {
     }
 
     public boolean atAirport() {
-        if (this.airport == "none") {
-            return false;
-        } else {
-            return true;
-        }
+        return !this.airport.equals("none");
     }
 
     // methods for changing the plane's airport
@@ -39,7 +35,7 @@ public class Plane {
     public void takeOff(String airport) throws Exception {
         if (!this.atAirport()) {
             throw new Exception("This plane cannot take off as it is already in flight!");
-        } else if (this.getAirport() != airport) {
+        } else if (!this.getAirport().equals(airport)) {
             throw new Exception("The pane can't take off from an airport that it is not at");
         } else { // further errors to throw when airport class implemented
             this.setAirport("none"); // also include call to airport method here

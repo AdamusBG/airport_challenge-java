@@ -3,9 +3,9 @@ import java.util.Random;
 
 public class Airport {
 
-    private ArrayList<String> planesInHangar;
-    private int capacity;
-    private Random myRandom;
+    private final ArrayList<String> planesInHangar;
+    private final int capacity;
+    private final Random myRandom;
 
     // constructor methods, one for custom capacity and one for default capacity and then copies of the same methods allowing for dependency injection in tests
 
