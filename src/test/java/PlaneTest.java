@@ -17,8 +17,8 @@ class PlaneTest {
     @Test
     void atAirport() {
         resetTestObjects();
-        assertEquals(false, inFlightPlane.atAirport(), "when plane in flight is asked if it is at an airport, it should return false");
-        assertEquals(true, landedPlane.atAirport(), "plane at an airport should return true when asked if it's at an airport");
+        assertFalse(inFlightPlane.atAirport(), "when plane in flight is asked if it is at an airport, it should return false");
+        assertTrue(landedPlane.atAirport(), "plane at an airport should return true when asked if it's at an airport");
     }
 
     @Test
@@ -35,11 +35,7 @@ class PlaneTest {
     @Test
     void unsuccessful_land() {
         resetTestObjects();
-        Exception exception = assertThrows(Exception.class, () -> {
-            landedPlane.land("frenchAirport");
-        });
-
-        git add .
+        assertThrows(Exception.class, () -> landedPlane.land("frenchAirport"));
     }
 
     @Test
@@ -56,9 +52,7 @@ class PlaneTest {
     @Test
     void unsuccessfulInFlight_takeOff() {
         resetTestObjects();
-        Exception exception = assertThrows(Exception.class, () -> {
-            inFlightPlane.takeOff("airport");
-        });
+        Exception exception = assertThrows(Exception.class, () -> inFlightPlane.takeOff("airport"));
 
         String expectedMessage = "This plane cannot take off as it is already in flight!";
         String actualMessage = exception.getMessage();
@@ -69,9 +63,7 @@ class PlaneTest {
     @Test
     void unsuccessfulWrongAirport_takeOff() {
         resetTestObjects();
-        Exception exception = assertThrows(Exception.class, () -> {
-            landedPlane.takeOff("frenchAirport");
-        });
+        Exception exception = assertThrows(Exception.class, () -> landedPlane.takeOff("frenchAirport"));
 
         String expectedMessage = "The pane can't take off from an airport that it is not at";
         String actualMessage = exception.getMessage();
