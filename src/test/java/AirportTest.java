@@ -1,15 +1,14 @@
 import org.junit.jupiter.api.Test;
-
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import static org.mockito.Mockito.*;
 
 public class AirportTest {
 
     Airport defaultAirport;
     Airport zeroCapacityAirport;
+    Airport badWeatherAirport;
 
     @Test
     void emptyHangar() {
@@ -43,6 +42,17 @@ public class AirportTest {
     }
 
     @Test
+    void unsuccessfulBadWeather_landPlane() {
+        resetTestObjects();
+        Exception exception = assertThrows(Exception.class, () -> badWeatherAirport.landPane("Normal plane"));
+
+        String expectedMessage = "The pane can't land at this airport due to stormy weather";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage), "correct error message is given when telling trying to land plane in poor weather");
+    }
+
+    @Test
     void successful_takeOffPlane() {
         resetTestObjects();
         String plane = "Real Plane";
@@ -66,14 +76,48 @@ public class AirportTest {
         assertTrue(actualMessage.contains(expectedMessage), "correct error message is given when telling airport to take off a plane that is not in its hangar");
     }
 
+    @Test
+    void unsuccessfulBadWeather_takeOffPlane() {
+        resetTestObjects();
+
+        landPlaneAtBadWeatherAirport();
+
+        Exception exception = assertThrows(Exception.class, () -> badWeatherAirport.takeOffPlane("Plane"));
+
+        String expectedMessage = "The pane can't take off from the airport due to stormy weather";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage), "correct error message is given when telling airport to take off a plane that is in its hangar but during stormy weather");
+    }
+
     // prevents the state of the test objects being affected between tests
     private void resetTestObjects() {
 
-        Random fakeRandom = mock(Random.class);
-        when(fakeRandom.nextInt(20)).thenReturn(1);
+        Random fakeRandomAlwaysGood = mock(Random.class);
+        when(fakeRandomAlwaysGood.nextInt(20)).thenReturn(2);
 
-        defaultAirport = new Airport(fakeRandom);
-        zeroCapacityAirport = new Airport(0, fakeRandom);
+        defaultAirport = new Airport(fakeRandomAlwaysGood);
+        zeroCapacityAirport = new Airport(0, fakeRandomAlwaysGood);
+
+        Random fakeRandomAlwaysBad = mock(Random.class);
+        when(fakeRandomAlwaysBad.nextInt(20)).thenReturn(0);
+
+        badWeatherAirport = new Airport(fakeRandomAlwaysBad);
+    }
+
+    private void landPlaneAtBadWeatherAirport() {
+        Random spyRandom = spy(new Random());
+        badWeatherAirport = new Airport(spyRandom);
+
+        when(spyRandom.nextInt(20)).thenReturn(1);
+
+        try {
+            badWeatherAirport.landPane("Plane");
+        } catch (Exception e) {
+            System.out.println("if you're seeing this then the spy allowing a plane to land hasn't worked correctly");
+        }
+
+        when(spyRandom.nextInt(20)).thenReturn(0);
     }
 
 }
