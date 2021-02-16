@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class Airport {
 
-    private final ArrayList<String> planesInHangar;
+    private final ArrayList<Plane> planesInHangar;
     private final int capacity;
     private final Random myRandom;
 
@@ -35,7 +35,7 @@ public class Airport {
 
     // methods for telling the airport how to interact with planes
 
-    public void landPane(String plane) throws Exception {
+    public void landPane(Plane plane) throws Exception {
         if (!this.hasCapacity()) {
             throw new Exception("The pane can't land as the airport is at capacity");
         } else if (!this.hasGoodWeather()) {
@@ -45,7 +45,7 @@ public class Airport {
         }
     }
 
-    public void takeOffPlane(String plane) throws Exception {
+    public void takeOffPlane(Plane plane) throws Exception {
         if (!this.planesInHangar.contains(plane)) {
             throw new Exception("The pane can't take off from an airport that it is not landed at");
         } else if (!this.hasGoodWeather()) {
@@ -57,7 +57,7 @@ public class Airport {
 
     // method returning list of planes
 
-    public ArrayList<String> getPlanesInHangar() {
+    public ArrayList<Plane> getPlanesInHangar() {
         return this.planesInHangar;
     }
 

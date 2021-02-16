@@ -9,6 +9,7 @@ public class AirportTest {
     Airport defaultAirport;
     Airport zeroCapacityAirport;
     Airport badWeatherAirport;
+    Plane planeMock;
 
     @Test
     void emptyHangar() {
@@ -20,20 +21,21 @@ public class AirportTest {
     @Test
     void successful_landPlane() {
         resetTestObjects();
-        String plane = "Real Plane";
+
         try {
-            defaultAirport.landPane(plane);
+            defaultAirport.landPane(planeMock);
         } catch (Exception e) {
             System.out.println("if you're seeing this something is really wrong");
         }
+
         assertEquals(1, defaultAirport.getPlanesInHangar().size(), "airport should have one plane in hangar after one landed");
-        assertEquals(plane, defaultAirport.getPlanesInHangar().get(0), "correct plane is added to hangar after landing");
+        assertEquals(planeMock, defaultAirport.getPlanesInHangar().get(0), "correct plane is added to hangar after landing");
     }
 
     @Test
     void unsuccessfulAtCapacity_landPlane() {
         resetTestObjects();
-        Exception exception = assertThrows(Exception.class, () -> zeroCapacityAirport.landPane("Normal plane"));
+        Exception exception = assertThrows(Exception.class, () -> zeroCapacityAirport.landPane(planeMock));
 
         String expectedMessage = "The pane can't land as the airport is at capacity";
         String actualMessage = exception.getMessage();
@@ -44,7 +46,7 @@ public class AirportTest {
     @Test
     void unsuccessfulBadWeather_landPlane() {
         resetTestObjects();
-        Exception exception = assertThrows(Exception.class, () -> badWeatherAirport.landPane("Normal plane"));
+        Exception exception = assertThrows(Exception.class, () -> badWeatherAirport.landPane(planeMock));
 
         String expectedMessage = "The pane can't land at this airport due to stormy weather";
         String actualMessage = exception.getMessage();
@@ -55,20 +57,21 @@ public class AirportTest {
     @Test
     void successful_takeOffPlane() {
         resetTestObjects();
-        String plane = "Real Plane";
+
         try {
-            defaultAirport.landPane(plane); // behaviour of this has already been tested above
-            defaultAirport.takeOffPlane(plane);
+            defaultAirport.landPane(planeMock); // behaviour of this has already been tested above
+            defaultAirport.takeOffPlane(planeMock);
         } catch (Exception e) {
             System.out.println("if you're seeing this something is really wrong");
         }
+
         assertEquals(0, defaultAirport.getPlanesInHangar().size(), "airport should have 0 planes in hangar after one landed and then taken off");
     }
 
     @Test
     void unsuccessfulPlaneNotAtAirport_takeOffPlane() {
         resetTestObjects();
-        Exception exception = assertThrows(Exception.class, () -> defaultAirport.takeOffPlane("Normal plane"));
+        Exception exception = assertThrows(Exception.class, () -> defaultAirport.takeOffPlane(planeMock));
 
         String expectedMessage = "The pane can't take off from an airport that it is not landed at";
         String actualMessage = exception.getMessage();
@@ -82,7 +85,7 @@ public class AirportTest {
 
         landPlaneAtBadWeatherAirport();
 
-        Exception exception = assertThrows(Exception.class, () -> badWeatherAirport.takeOffPlane("Plane"));
+        Exception exception = assertThrows(Exception.class, () -> badWeatherAirport.takeOffPlane(planeMock));
 
         String expectedMessage = "The pane can't take off from the airport due to stormy weather";
         String actualMessage = exception.getMessage();
@@ -103,6 +106,8 @@ public class AirportTest {
         when(fakeRandomAlwaysBad.nextInt(20)).thenReturn(0);
 
         badWeatherAirport = new Airport(fakeRandomAlwaysBad);
+
+        planeMock = mock(Plane.class);
     }
 
     private void landPlaneAtBadWeatherAirport() {
@@ -112,7 +117,7 @@ public class AirportTest {
         when(spyRandom.nextInt(20)).thenReturn(1);
 
         try {
-            badWeatherAirport.landPane("Plane");
+            badWeatherAirport.landPane(planeMock);
         } catch (Exception e) {
             System.out.println("if you're seeing this then the spy allowing a plane to land hasn't worked correctly");
         }
