@@ -39,10 +39,7 @@ class PlaneTest {
             landedPlane.land("frenchAirport");
         });
 
-        String expectedMessage = "This plane is already at an airport!";
-        String actualMessage = exception.getMessage();
-
-        assertTrue(actualMessage.contains(expectedMessage), "correct error message is given when telling a plane that is already at an airport to land");
+        git add .
     }
 
     @Test

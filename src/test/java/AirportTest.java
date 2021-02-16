@@ -4,6 +4,8 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import static org.mockito.Mockito.*;
+
 public class AirportTest {
 
     Airport defaultAirport;
@@ -32,9 +34,7 @@ public class AirportTest {
     @Test
     void unsuccessfulAtCapacity_landPlane() {
         resetTestObjects();
-        Exception exception = assertThrows(Exception.class, () -> {
-            zeroCapacityAirport.landPane("Normal plane");
-        });
+        Exception exception = assertThrows(Exception.class, () -> zeroCapacityAirport.landPane("Normal plane"));
 
         String expectedMessage = "The pane can't land as the airport is at capacity";
         String actualMessage = exception.getMessage();
@@ -58,9 +58,7 @@ public class AirportTest {
     @Test
     void unsuccessfulPlaneNotAtAirport_takeOffPlane() {
         resetTestObjects();
-        Exception exception = assertThrows(Exception.class, () -> {
-            defaultAirport.takeOffPlane("Normal plane");
-        });
+        Exception exception = assertThrows(Exception.class, () -> defaultAirport.takeOffPlane("Normal plane"));
 
         String expectedMessage = "The pane can't take off from an airport that it is not landed at";
         String actualMessage = exception.getMessage();
@@ -71,15 +69,11 @@ public class AirportTest {
     // prevents the state of the test objects being affected between tests
     private void resetTestObjects() {
 
-        class FakeRandom extends Random {
-            @Override
-            public int nextInt(int number) {
-                return 1; // this means that when the good weather method is called it will always return true
-            }
-        }
+        Random fakeRandom = mock(Random.class);
+        when(fakeRandom.nextInt(20)).thenReturn(1);
 
-        defaultAirport = new Airport(new FakeRandom());
-        zeroCapacityAirport = new Airport(0, new FakeRandom());
+        defaultAirport = new Airport(fakeRandom);
+        zeroCapacityAirport = new Airport(0, fakeRandom);
     }
 
 }
