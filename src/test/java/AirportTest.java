@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.Test;
 
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AirportTest {
@@ -68,8 +70,16 @@ public class AirportTest {
 
     // prevents the state of the test objects being affected between tests
     private void resetTestObjects() {
-        defaultAirport = new Airport();
-        zeroCapacityAirport = new Airport(0);
+
+        class FakeRandom extends Random {
+            @Override
+            public int nextInt(int number) {
+                return 1; // this means that when the good weather method is called it will always return true
+            }
+        }
+
+        defaultAirport = new Airport(new FakeRandom());
+        zeroCapacityAirport = new Airport(0, new FakeRandom());
     }
 
 }

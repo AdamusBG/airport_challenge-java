@@ -5,17 +5,32 @@ public class Airport {
 
     private ArrayList<String> planesInHangar;
     private int capacity;
+    private Random myRandom;
 
-    // constructor methods, one for custom capacity and one for default capacity
+    // constructor methods, one for custom capacity and one for default capacity and then copies of the same methods allowing for dependency injection in tests
 
     public Airport(int capacity) {
         this.planesInHangar = new ArrayList<>();
         this.capacity = capacity;
+        this.myRandom = new Random();
     }
 
     public Airport() {
         this.planesInHangar = new ArrayList<>();
         this.capacity = 20;
+        this.myRandom = new Random();
+    }
+
+    public Airport(int capacity, Random injected) {
+        this.planesInHangar = new ArrayList<>();
+        this.capacity = capacity;
+        this.myRandom = injected;
+    }
+
+    public Airport(Random injected) {
+        this.planesInHangar = new ArrayList<>();
+        this.capacity = 20;
+        this.myRandom = injected;
     }
 
     // methods for telling the airport how to interact with planes
@@ -53,8 +68,7 @@ public class Airport {
     }
 
     private boolean hasGoodWeather() {
-        Random randWeather = new Random();
-        int weatherRoll = randWeather.nextInt(20) + 1;
+        int weatherRoll = myRandom.nextInt(20) + 1;
         return 1 != weatherRoll; // gives a 1 in 20 chance for bad weather
     }
 
