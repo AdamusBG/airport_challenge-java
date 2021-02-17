@@ -31,6 +31,7 @@ public class Plane {
             throw new Exception("The plane cannot land due to stormy weather!");
         } else {
             this.setAirport(airport); // also include call to airport methods here
+            airport.landPane(this);
         }
     }
 
@@ -43,6 +44,7 @@ public class Plane {
             throw new Exception("The plane cannot take off due to stormy weather!");
         } else {
             this.setAirport(null); // also include call to airport method here
+            airport.takeOffPlane(this);
         }
     }
 
