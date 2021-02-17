@@ -9,6 +9,7 @@ class PlaneTest {
     Plane landedPlane;
     Airport airportMock1;
     Airport airportMock2;
+    Airport badWeatherAirportMock;
 
     @Test
     void getAirport() {
@@ -36,12 +37,24 @@ class PlaneTest {
     }
 
     @Test
-    void unsuccessful_land() {
+    void unsuccessfulAlreadyLanded_land() {
         resetTestObjects();
 
         Exception exception = assertThrows(Exception.class, () -> landedPlane.land(airportMock2));
 
         String expectedMessage = "This plane is already at an airport!";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage), "correct error message is given when telling plane to land when already landed");
+    }
+
+    @Test
+    void unsuccessfulBadWeather_land() {
+        resetTestObjects();
+
+        Exception exception = assertThrows(Exception.class, () -> inFlightPlane.land(badWeatherAirportMock));
+
+        String expectedMessage = "The plane cannot land due to stormy weather!";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage), "correct error message is given when telling plane to land when already landed");
@@ -72,6 +85,7 @@ class PlaneTest {
     @Test
     void unsuccessfulWrongAirport_takeOff() {
         resetTestObjects();
+
         Exception exception = assertThrows(Exception.class, () -> landedPlane.takeOff(airportMock2));
 
         String expectedMessage = "The pane can't take off from an airport that it is not at";
@@ -80,12 +94,42 @@ class PlaneTest {
         assertTrue(actualMessage.contains(expectedMessage), "correct error message is given when telling a plane to take off from an airport that it is not landed at");
     }
 
+    @Test
+    void unsuccessfulBadWeather_takeOff() {
+        resetTestObjects();
+        landPlaneAtBadWeatherAirport(); // lands 'inFlightPlane' at 'badWeatherAirportMock'
+
+        Exception exception = assertThrows(Exception.class, () -> inFlightPlane.takeOff(badWeatherAirportMock));
+
+        String expectedMessage = "The plane cannot take off due to stormy weather!";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage), "correct error message is given when telling a plane to take off from an airport that it is landed at in bad weather");
+    }
+
     // prevents the state of the test objects being affected between tests
     private void resetTestObjects() {
         airportMock1 = mock(Airport.class);
         airportMock2 = mock(Airport.class);
 
+        when(airportMock1.hasGoodWeather()).thenReturn(true);
+        when(airportMock2.hasGoodWeather()).thenReturn(true);
+
+        badWeatherAirportMock = mock(Airport.class);
+
+        when(badWeatherAirportMock.hasGoodWeather()).thenReturn(false);
+
         inFlightPlane = new Plane();
         landedPlane = new Plane(airportMock1);
+    }
+
+    private void landPlaneAtBadWeatherAirport() {
+        when(badWeatherAirportMock.hasGoodWeather()).thenReturn(true);
+        try {
+            inFlightPlane.land(badWeatherAirportMock);
+        } catch (Exception e) {
+            System.out.println("if you're seeing this then landing plane at the bad weather airport mock has been unsuccessful");
+        }
+        when(badWeatherAirportMock.hasGoodWeather()).thenReturn(false);
     }
 }

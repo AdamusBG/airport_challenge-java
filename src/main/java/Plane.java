@@ -27,7 +27,9 @@ public class Plane {
     public void land(Airport airport) throws Exception {
         if (this.atAirport()) {
             throw new Exception("This plane is already at an airport!");
-        } else { // further errors to throw when airport class implemented
+        } else if (!airport.hasGoodWeather()) {
+            throw new Exception("The plane cannot land due to stormy weather!");
+        } else {
             this.setAirport(airport); // also include call to airport methods here
         }
     }
@@ -37,7 +39,9 @@ public class Plane {
             throw new Exception("This plane cannot take off as it is already in flight!");
         } else if (!this.getAirport().equals(airport)) {
             throw new Exception("The pane can't take off from an airport that it is not at");
-        } else { // further errors to throw when airport class implemented
+        } else if(!airport.hasGoodWeather()) {
+            throw new Exception("The plane cannot take off due to stormy weather!");
+        } else {
             this.setAirport(null); // also include call to airport method here
         }
     }
