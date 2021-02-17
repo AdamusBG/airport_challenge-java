@@ -39,3 +39,22 @@ I want to prevent takeoff when weather is stormy
 As an air traffic controller  
 To ensure safety  
 I want to prevent landing when weather is stormy  
+
+## Information
+
+Edge cases considered:  
+* Planes will not be able to take off from an airport that they are not currently in  
+* Planes will not be able to take off when already in flight  
+* Planes cannot land at an airport if they are already at an airport  
+* Planes can neither land nor take off from an airport with bad weather (randomly chosen)
+
+To test the program yourself, open a terminal and navigate to a directory that you would like this repository saved in and then follow the instructions below. Note that to run tests you will need to have Maven installed.  
+
+```
+$ git clone https://github.com/AdamusBG/airport_challenge-java.git
+$ cd airport_challenge-java
+$ mvn test
+```
+
+This will run 17 passing tests across three test classes, including a larger feature test, which prove that edge cases have been handled correctly.  
+The feature test located at './src/test/Java/FeatureTest.java' tests the behaviour of the program with several airports and planes.  
