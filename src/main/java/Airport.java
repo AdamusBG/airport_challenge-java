@@ -61,15 +61,19 @@ public class Airport {
         return this.planesInHangar;
     }
 
+    // method for random weather conditions
+
+    public boolean hasGoodWeather() {
+        int weatherRoll = myRandom.nextInt(20) + 1;
+        return 1 != weatherRoll; // gives a 1 in 20 chance for bad weather
+    }
+
     // private methods
 
     private boolean hasCapacity() {
         return this.planesInHangar.size() < this.capacity;
     }
 
-    private boolean hasGoodWeather() {
-        int weatherRoll = myRandom.nextInt(20) + 1;
-        return 1 != weatherRoll; // gives a 1 in 20 chance for bad weather
-    }
+
 
 }
