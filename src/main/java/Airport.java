@@ -37,9 +37,9 @@ public class Airport {
 
     public void landPane(Plane plane) throws Exception {
         if (!this.hasCapacity()) {
-            throw new Exception("The pane can't land as the airport is at capacity");
+            throw new Exception("The plane can't land as the airport is at capacity");
         } else if (!this.hasGoodWeather()) {
-            throw new Exception("The pane can't land at this airport due to stormy weather");
+            throw new Exception("The plane can't land at this airport due to stormy weather");
         } else {
             this.planesInHangar.add(plane);
         }
@@ -47,9 +47,9 @@ public class Airport {
 
     public void takeOffPlane(Plane plane) throws Exception {
         if (!this.planesInHangar.contains(plane)) {
-            throw new Exception("The pane can't take off from an airport that it is not landed at");
+            throw new Exception("The plane can't take off from an airport that it is not landed at");
         } else if (!this.hasGoodWeather()) {
-            throw new Exception("The pane can't take off from the airport due to stormy weather");
+            throw new Exception("The plane can't take off from the airport due to stormy weather");
         } else {
             this.planesInHangar.remove(plane);
         }

@@ -39,7 +39,7 @@ public class Plane {
         if (!this.atAirport()) {
             throw new Exception("This plane cannot take off as it is already in flight!");
         } else if (!this.getAirport().equals(airport)) {
-            throw new Exception("The pane can't take off from an airport that it is not at");
+            throw new Exception("The plane can't take off from an airport that it is not at");
         } else if(!airport.hasGoodWeather()) {
             throw new Exception("The plane cannot take off due to stormy weather!");
         } else {
